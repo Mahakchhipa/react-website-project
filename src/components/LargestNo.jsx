@@ -1,22 +1,32 @@
 import React, { useState } from "react";
 
 const LargestNo = () => {
+  const [Max, setMax] = useState("");
   const [Numbers, setNumbers] = useState({
     num1: "",
     num2: "",
     num3: "",
   });
 
+  const HandleChange = (e) => {
+    setNumbers({ ...Numbers, [e.target.name]: e.target.value });
+  };
 
-  const HandleChange = (e)=>{
-    setNumbers ({...Numbers , [e.target.name] :e.target.value})
-   
-  }
+  const HandleSubmit = (e) => {
+    e.preventDefault();
+    let max = Numbers.num1;
+    if (max < Numbers.num2) {
+      max = Numbers.num2;
+    }
+    if (max < Numbers.num3) {
+      max = Numbers.num3;
+    }
+    setMax(max);
+    console.log(Numbers);
+    console.log(max);
+  };
 
-  const HandleSubmit = (e)=>{
-     e.preventDefault ()
-     console.log(Numbers)
-  }
+ 
   return (
     <div>
       <div className="min-h-screen bg-slate-900 flex flex-col justify-center items-center">
@@ -24,7 +34,10 @@ const LargestNo = () => {
           Find the Largest Number
         </h1>
         <div className="bg-gray-800 p-8 shadow-2xl w-96 border-2 border-blue-500 rounded-lg">
-          <form className="flex flex-col items-center mb-5" onSubmit={HandleSubmit}>
+          <form
+            className="flex flex-col items-center mb-5"
+            onSubmit={HandleSubmit}
+          >
             <input
               type="text"
               name="num1"
@@ -58,6 +71,7 @@ const LargestNo = () => {
             >
               Find Largest
             </button>
+            {Max && <h1> Maximum number of 3 {Max}</h1>}
           </form>
         </div>
       </div>
